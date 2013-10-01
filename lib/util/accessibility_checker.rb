@@ -209,7 +209,6 @@ def self.modify_table_sc(text)
         end
       }
     end
-    
     "<table #{table_1}>#{table_2}</table>"
   }
 end
@@ -233,6 +232,20 @@ def self.modify_table_th(text)
   text.gsub(/<table(.*?)>(.*?)<\/table\s*>/m){ |table|
     table_1 = $1
     table_2 = $2
+    if !(table_2 =~ /<thead\s*>.*?<\/thead\s*>/m)
+      table_2 = "<thead><tr><th>ヘッダー</th></tr></thead>" + table_2
+      "<table#{table_1}>#{table_2}</table>"
+    else
+      table
+    end
+  }
+end
+
+=begin
+def self.modify_table_th(text)
+  text.gsub(/<table(.*?)>(.*?)<\/table\s*>/m){ |table|
+    table_1 = $1
+    table_2 = $2
     
     if !(table_2 =~ /<th\s*>.*?<\/th\s*>/m) &&  !(table_2 =~ /<thead\s*>.*?<\/thead\s*>/m)
       if table_2 =~ /<tbody\s*>.*?<\/tbody\s*>/m
@@ -251,7 +264,7 @@ def self.modify_table_th(text)
     end
   }
 end
-
+=end
 def self.modify_href_icon(text, host)
  text.gsub(/<a(.*?)>/){
     a = $1
