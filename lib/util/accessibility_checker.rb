@@ -1,6 +1,7 @@
 # encoding: utf-8
 class Util::AccessibilityChecker
   
+  
    def self.check(text, options={})
      errors ||= []
      
